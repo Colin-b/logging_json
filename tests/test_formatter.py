@@ -4,35 +4,38 @@ import time
 
 import logging_json
 
-logging.basicConfig(level=logging.DEBUG)
-
 
 class MyException(Exception):
     pass
 
 
 def test_empty_dict_message(caplog):
+    caplog.set_level("INFO")
     logging.info({})
     assert fmt(caplog) == "{}"
 
 
 def test_dict_message(caplog):
+    caplog.set_level("INFO")
     logging.info({"key 1": "value 1", "key 2": 2})
     assert fmt(caplog) == '{"key 1": "value 1", "key 2": 2}'
 
 
 def test_str_message(caplog):
+    caplog.set_level("INFO")
     logging.info("message 1")
     assert fmt(caplog) == "message 1"
 
 
 def test_str_with_args_message(caplog):
+    caplog.set_level("INFO")
     logging.info("message %s", "1")
     assert fmt(caplog) == "message 1"
 
 
 def test_dict_message_with_asctime(caplog, monkeypatch):
     monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+    caplog.set_level("INFO")
     logging.info({"key 1": "value 1", "key 2": 2})
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
     assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
@@ -41,6 +44,7 @@ def test_dict_message_with_asctime(caplog, monkeypatch):
 
 def test_str_message_with_asctime(caplog, monkeypatch):
     monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+    caplog.set_level("INFO")
     logging.info("message 1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
     assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
@@ -49,6 +53,7 @@ def test_str_message_with_asctime(caplog, monkeypatch):
 
 def test_str_with_args_message_with_asctime(caplog, monkeypatch):
     monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+    caplog.set_level("INFO")
     logging.info("message %s", "1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
     assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
@@ -56,6 +61,7 @@ def test_str_with_args_message_with_asctime(caplog, monkeypatch):
 
 
 def test_dict_message_at_exception_level(caplog):
+    caplog.set_level("INFO")
     try:
         raise MyException("this is the exception message")
     except MyException:
@@ -73,6 +79,7 @@ def test_dict_message_at_exception_level(caplog):
 
 
 def test_str_message_at_exception_level(caplog):
+    caplog.set_level("INFO")
     try:
         raise MyException("this is the exception message")
     except MyException:
@@ -89,6 +96,7 @@ def test_str_message_at_exception_level(caplog):
 
 
 def test_str_with_args_message_at_exception_level(caplog):
+    caplog.set_level("INFO")
     try:
         raise MyException("this is the exception message")
     except MyException:
@@ -106,6 +114,7 @@ def test_str_with_args_message_at_exception_level(caplog):
 
 def test_documented_record_attributes(caplog, monkeypatch):
     monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+    caplog.set_level("INFO")
     logging.info({})
     actual = dict_fmt(
         caplog,
