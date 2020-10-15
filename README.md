@@ -5,11 +5,20 @@
 <a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Build status" src="https://api.travis-ci.com/Colin-b/logging_json.svg?branch=master"></a>
 <a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-<a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Number of tests" src="https://img.shields.io/badge/tests-0 passed-blue"></a>
+<a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Number of tests" src="https://img.shields.io/badge/tests-11 passed-blue"></a>
 <a href="https://pypi.org/project/logging_json/"><img alt="Number of downloads" src="https://img.shields.io/pypi/dm/logging_json"></a>
 </p>
 
-This module provides a JSON formatter for the python [`logging`](https://docs.python.org/3/library/logging.html) module.
+This module provides a JSON formatter for the python [`logging`](https://docs.python.org/3/library/logging.html) module that will format to JSON formatted string.
+
+Using this formatter allows to have the proper format for logging to `Splunk` or `ElasticSearch`, but it can also be used for logging to stdout as a string is issued.
+
+- [Features](#features)
+  - [Custom fields](#adding-additional-fields-and-values)
+  - [dict logging](#logging-with-a-dictionary)
+  - [str logging](#logging-with-anything-else-such-as-a-string)
+- [Configuration](#configuration)
+  - [Using dictConfig](#using-loggingconfigdictconfig)
 
 ## Features
 
