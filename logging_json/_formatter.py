@@ -1,7 +1,39 @@
 import collections
 import json
 import logging
-from typing import Any
+from typing import Any, Dict
+
+standard_attributes = (
+    "name",
+    "msg",
+    "args",
+    "levelname",
+    "levelno",
+    "pathname",
+    "filename",
+    "module",
+    "exc_info",
+    "exc_text",
+    "stack_info",
+    "lineno",
+    "funcName",
+    "created",
+    "msecs",
+    "relativeCreated",
+    "thread",
+    "threadName",
+    "processName",
+    "process",
+    "message",
+    "asctime",
+)
+
+
+def _extra_attributes(record: logging.LogRecord) -> Dict[str, Any]:
+    return {
+        name: record.__dict__[name]
+        for name in set(record.__dict__).difference(standard_attributes)
+    }
 
 
 def _value(record: logging.LogRecord, field_name_or_value: Any) -> Any:
@@ -17,7 +49,7 @@ def _value(record: logging.LogRecord, field_name_or_value: Any) -> Any:
 
 
 class JSONFormatter(logging.Formatter):
-    def __init__(self, *args, fields=None, **kwargs):
+    def __init__(self, *args, fields: Dict[str, Any] = None, **kwargs):
         # Allow to provide any formatter setting (useful to provide a custom date format)
         super().__init__(*args, **kwargs)
         self.fields = fields or {}
@@ -35,6 +67,8 @@ class JSONFormatter(logging.Formatter):
             message.update(record.msg)
         else:
             message["msg"] = super().formatMessage(record)
+
+        message.update(_extra_attributes(record))
 
         if record.exc_info:
             message["exception"] = {
