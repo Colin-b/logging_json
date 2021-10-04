@@ -5,7 +5,7 @@
 <a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Build status" src="https://api.travis-ci.com/Colin-b/logging_json.svg?branch=master"></a>
 <a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-<a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Number of tests" src="https://img.shields.io/badge/tests-11 passed-blue"></a>
+<a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Number of tests" src="https://img.shields.io/badge/tests-15 passed-blue"></a>
 <a href="https://pypi.org/project/logging_json/"><img alt="Number of downloads" src="https://img.shields.io/pypi/dm/logging_json"></a>
 </p>
 
@@ -55,7 +55,7 @@ The resulting JSON dictionary will be the one you provided (with the [additional
 ### Logging with anything else (such as a string)
 
 Anything not logged using a dictionary will be handled by the standard formatter and it can result in one of the 2 output:
-* A JSON dictionary, if [additional fields](#adding-additional-fields-and-values) are set, with the message available in the `msg` key of the resulting JSON dictionary.
+* A JSON dictionary, if [additional fields](#adding-additional-fields-and-values) are set or if `extra` parameter is used while logging, with the message available in the `msg` key of the resulting JSON dictionary.
 * The formatted record, if no [additional fields](#adding-additional-fields-and-values) are set. 
 
 This handles the usual string logging as in the following:
