@@ -88,24 +88,25 @@ You can configure your logging as advertise by python, by using the `logging.con
 
 ```python
 import logging.config
-import logging_json
-import sys
-
-formatter = logging_json.JSONFormatter(fields={
-    "level_name": "levelname",
-    "thread_name": "threadName",
-    "process_name": "processName"
-})
-handler = logging.StreamHandler(stream=sys.stdout)
-handler.setFormatter(formatter)
 
 logging.config.dictConfig({
     "version": 1,
     "formatters": {
-        "json": formatter
+        "json": {
+            '()': 'logging_json.JSONFormatter',
+            'fields':{
+                "level_name": "levelname",
+                "thread_name": "threadName",
+                "process_name": "processName"
+            }
+        }
     },
     "handlers": {
-        "standard_output": handler,
+        "standard_output": {
+            'class': 'logging.StreamHandler',
+            'formatter': 'json',
+            'stream': 'ext://sys.stdout'
+        },
     },
     "loggers": {
         "my_app": {"level": "DEBUG"}
