@@ -49,11 +49,18 @@ def _value(record: logging.LogRecord, field_name_or_value: Any) -> Any:
 
 
 class JSONFormatter(logging.Formatter):
-    def __init__(self, *args, fields: Dict[str, Any] = None, **kwargs):
+    def __init__(
+        self,
+        *args,
+        fields: Dict[str, Any] = None,
+        message_field_name: str = "msg",
+        **kwargs,
+    ):
         # Allow to provide any formatter setting (useful to provide a custom date format)
         super().__init__(*args, **kwargs)
         self.fields = fields or {}
         self.usesTime = lambda: "asctime" in self.fields.values()
+        self.message_field_name = message_field_name
 
     def format(self, record: logging.LogRecord):
         # Let python set every additional record field
@@ -66,7 +73,7 @@ class JSONFormatter(logging.Formatter):
         if isinstance(record.msg, collections.abc.Mapping):
             message.update(record.msg)
         else:
-            message["msg"] = super().formatMessage(record)
+            message[self.message_field_name] = super().formatMessage(record)
 
         message.update(_extra_attributes(record))
 
@@ -79,7 +86,7 @@ class JSONFormatter(logging.Formatter):
 
         return (
             super().formatMessage(record)
-            if (len(message) == 1 and "msg" in message)
+            if (len(message) == 1 and self.message_field_name in message)
             else json.dumps(message)
         )
 

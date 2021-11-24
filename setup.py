@@ -29,6 +29,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Topic :: Software Development :: Build Tools",
     ],
     keywords=["logging", "json"],
@@ -37,7 +38,7 @@ setup(
     extras_require={
         "testing": [
             # Used to check coverage
-            "pytest-cov==2.*",
+            "pytest-cov==3.*",
         ]
     },
     python_requires=">=3.6",

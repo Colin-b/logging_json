@@ -2,10 +2,10 @@
 
 <p align="center">
 <a href="https://pypi.org/project/logging_json/"><img alt="pypi version" src="https://img.shields.io/pypi/v/logging_json"></a>
-<a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Build status" src="https://api.travis-ci.com/Colin-b/logging_json.svg?branch=master"></a>
-<a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
+<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Build status" src="https://github.com/Colin-b/logging_json/workflows/Release/badge.svg"></a>
+<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-<a href="https://travis-ci.com/Colin-b/logging_json"><img alt="Number of tests" src="https://img.shields.io/badge/tests-15 passed-blue"></a>
+<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Number of tests" src="https://img.shields.io/badge/tests-17 passed-blue"></a>
 <a href="https://pypi.org/project/logging_json/"><img alt="Number of downloads" src="https://img.shields.io/pypi/dm/logging_json"></a>
 </p>
 
@@ -33,7 +33,7 @@ It must be a dictionary where keys are the keys to be appended to the resulting 
 
 #### Logging exceptions, a specific case
 
-If an exception is loggued, the `exception` key will be appended to the resulting JSON dictionary.
+If an exception is logged, the `exception` key will be appended to the resulting JSON dictionary.
 
 This dictionary will contains 3 keys:
 * `type`: The name of the exception class (useful when the message is blank).
@@ -56,6 +56,7 @@ The resulting JSON dictionary will be the one you provided (with the [additional
 
 Anything not logged using a dictionary will be handled by the standard formatter and it can result in one of the 2 output:
 * A JSON dictionary, if [additional fields](#adding-additional-fields-and-values) are set or if `extra` parameter is used while logging, with the message available in the `msg` key of the resulting JSON dictionary.
+  Default `msg` key name can be changed by `message_field_name` parameter of the `logging_json.JSONFormatter` instance.
 * The formatted record, if no [additional fields](#adding-additional-fields-and-values) are set. 
 
 This handles the usual string logging as in the following:
@@ -88,24 +89,25 @@ You can configure your logging as advertise by python, by using the `logging.con
 
 ```python
 import logging.config
-import logging_json
-import sys
-
-formatter = logging_json.JSONFormatter(fields={
-    "level_name": "levelname",
-    "thread_name": "threadName",
-    "process_name": "processName"
-})
-handler = logging.StreamHandler(stream=sys.stdout)
-handler.setFormatter(formatter)
 
 logging.config.dictConfig({
     "version": 1,
     "formatters": {
-        "json": formatter
+        "json": {
+            '()': 'logging_json.JSONFormatter',
+            'fields':{
+                "level_name": "levelname",
+                "thread_name": "threadName",
+                "process_name": "processName"
+            }
+        }
     },
     "handlers": {
-        "standard_output": handler,
+        "standard_output": {
+            'class': 'logging.StreamHandler',
+            'formatter': 'json',
+            'stream': 'ext://sys.stdout'
+        },
     },
     "loggers": {
         "my_app": {"level": "DEBUG"}

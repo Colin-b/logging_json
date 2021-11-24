@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-11-24
+### Added
+- Added `message_field_name` parameter.
+
 ## [0.1.0] - 2021-10-04
 ### Fixed
 - Handle `extra` logging parameter.
@@ -14,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Public release.
 
-[Unreleased]: https://github.com/Colin-b/healthpy/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/Colin-b/healthpy/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Colin-b/healthpy/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Colin-b/healthpy/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/Colin-b/healthpy/releases/tag/v0.0.1
