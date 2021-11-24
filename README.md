@@ -56,6 +56,7 @@ The resulting JSON dictionary will be the one you provided (with the [additional
 
 Anything not logged using a dictionary will be handled by the standard formatter and it can result in one of the 2 output:
 * A JSON dictionary, if [additional fields](#adding-additional-fields-and-values) are set or if `extra` parameter is used while logging, with the message available in the `msg` key of the resulting JSON dictionary.
+  Default `msg` key name can be changed by `message_field_name` parameter of the `logging_json.JSONFormatter` instance.
 * The formatted record, if no [additional fields](#adding-additional-fields-and-values) are set. 
 
 This handles the usual string logging as in the following:

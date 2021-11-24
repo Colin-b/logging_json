@@ -33,10 +33,24 @@ def test_str_with_args_message(caplog):
     assert fmt(caplog) == "message 1"
 
 
+def test_str_with_message_field_name(caplog):
+    caplog.set_level("INFO")
+    logging.info("message 1")
+    assert fmt(caplog, message_field_name="message") == "message 1"
+
+
 def test_str_with_extra_message(caplog):
     caplog.set_level("INFO")
     logging.info("message 1", extra={"key1": "value 1"})
     assert dict_fmt(caplog) == {"msg": "message 1", "key1": "value 1"}
+
+
+def test_str_with_message_field_name_and_fields(caplog):
+    caplog.set_level("INFO")
+    logging.info("message 1")
+    assert dict_fmt(
+        caplog, message_field_name="message", fields={"level": "levelname"}
+    ) == {"message": "message 1", "level": "INFO"}
 
 
 def test_str_with_args_and_extra_message(caplog):
