@@ -33,7 +33,7 @@ It must be a dictionary where keys are the keys to be appended to the resulting 
 
 #### Logging exceptions, a specific case
 
-If an exception is loggued, the `exception` key will be appended to the resulting JSON dictionary.
+If an exception is logged, the `exception` key will be appended to the resulting JSON dictionary.
 
 This dictionary will contains 3 keys:
 * `type`: The name of the exception class (useful when the message is blank).
