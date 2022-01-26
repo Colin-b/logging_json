@@ -1,6 +1,7 @@
 import logging
 import json
 import time
+import datetime
 
 import logging_json
 
@@ -197,21 +198,43 @@ def test_documented_record_attributes(caplog, monkeypatch):
 def test_with_extra_in_fields_and_message(caplog):
     caplog.set_level("INFO")
     logging.info("message 1", extra={"key1": "value 1"})
-    assert (
-        dict_fmt(
-            caplog,
-            fields={
-                "extra": "key1",
-                "key2": "value 2",
-            },
-        )
-        == {
-            "extra": "value 1",
-            "key1": "value 1",
-            "key2": "value 2",
-            "msg": "message 1",
+    assert dict_fmt(caplog, fields={"extra": "key1", "key2": "value 2",},) == {
+        "extra": "value 1",
+        "key1": "value 1",
+        "key2": "value 2",
+        "msg": "message 1",
+    }
+
+
+def test_json_dumps_error(caplog):
+    class CustomWithoutStr:
+        pass
+
+    custom = CustomWithoutStr()
+
+    class CustomWithStr:
+        def __str__(self):
+            return "Custom instance"
+
+    caplog.set_level("INFO")
+    logging.info(
+        {
+            "my_datetime": datetime.datetime(
+                2020, 1, 10, 3, 14, 11, tzinfo=datetime.timezone.utc
+            ),
+            "my_date": datetime.date(2020, 1, 10),
+            "my_time": datetime.time(3, 14, 11, tzinfo=datetime.timezone.utc),
+            "my_custom_obj": custom,
+            "my_custom_obj_with_str": CustomWithStr(),
         }
     )
+    assert dict_fmt(caplog,) == {
+        "my_custom_obj": str(custom),
+        "my_custom_obj_with_str": "Custom instance",
+        "my_date": "2020-01-10",
+        "my_datetime": "2020-01-10T03:14:11+00:00",
+        "my_time": "03:14:11+00:00",
+    }
 
 
 def fmt(caplog, *formatter_args, **formatter_kwargs) -> str:

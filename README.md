@@ -5,7 +5,7 @@
 <a href="https://github.com/Colin-b/logging_json/actions"><img alt="Build status" src="https://github.com/Colin-b/logging_json/workflows/Release/badge.svg"></a>
 <a href="https://github.com/Colin-b/logging_json/actions"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Number of tests" src="https://img.shields.io/badge/tests-17 passed-blue"></a>
+<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Number of tests" src="https://img.shields.io/badge/tests-18 passed-blue"></a>
 <a href="https://pypi.org/project/logging_json/"><img alt="Number of downloads" src="https://img.shields.io/pypi/dm/logging_json"></a>
 </p>
 
@@ -35,7 +35,7 @@ It must be a dictionary where keys are the keys to be appended to the resulting 
 
 If an exception is logged, the `exception` key will be appended to the resulting JSON dictionary.
 
-This dictionary will contains 3 keys:
+This dictionary will contain 3 keys:
 * `type`: The name of the exception class (useful when the message is blank).
 * `message`: The str representation of the exception (usually the provided error message).
 * `stack`: The stack trace, formatted as a string.

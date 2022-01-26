@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2022-01-26
+### Fixed
+- `datetime`, `time` and `date` instances are now represented following [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) format instead of raising a `TypeError`.
+- Default to the `str` representation of value instead of raising a `TypeError` for non-standard python types.
+
 ## [0.2.0] - 2021-11-24
 ### Added
 - Added `message_field_name` parameter.
@@ -18,7 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Public release.
 
-[Unreleased]: https://github.com/Colin-b/healthpy/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/Colin-b/healthpy/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/Colin-b/healthpy/compare/v0.0.1...v0.1.0
-[0.0.1]: https://github.com/Colin-b/healthpy/releases/tag/v0.0.1
+[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/Colin-b/logging_json/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/Colin-b/logging_json/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/Colin-b/logging_json/compare/v0.0.1...v0.1.0
+[0.0.1]: https://github.com/Colin-b/logging_json/releases/tag/v0.0.1
