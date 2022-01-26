@@ -1,4 +1,5 @@
 import collections
+import datetime
 import json
 import logging
 from typing import Any, Dict
@@ -48,6 +49,12 @@ def _value(record: logging.LogRecord, field_name_or_value: Any) -> Any:
         return field_name_or_value
 
 
+def default_converter(obj: Any) -> str:
+    if isinstance(obj, datetime.datetime):
+        return obj.isoformat()
+    return str(obj)
+
+
 class JSONFormatter(logging.Formatter):
     def __init__(
         self,
@@ -84,11 +91,10 @@ class JSONFormatter(logging.Formatter):
                 "stack": self.formatException(record.exc_info),
             }
 
-        return (
-            super().formatMessage(record)
-            if (len(message) == 1 and self.message_field_name in message)
-            else json.dumps(message)
-        )
+        if len(message) == 1 and self.message_field_name in message:
+            return super().formatMessage(record)
+
+        return json.dumps(message, default=default_converter)
 
     def formatMessage(self, record: logging.LogRecord) -> str:
         # Speed up this step by doing nothing
