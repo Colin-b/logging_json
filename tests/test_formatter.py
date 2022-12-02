@@ -2,6 +2,7 @@ import logging
 import json
 import time
 import datetime
+import pytest
 
 import logging_json
 
@@ -111,6 +112,38 @@ def test_dict_message_at_exception_level(caplog):
             "message": "this is the exception message",
             "type": "MyException",
         },
+    }
+
+
+def test_dict_message_at_exception_level_with_different_field_name(caplog):
+    caplog.set_level("INFO")
+    try:
+        raise MyException("this is the exception message")
+    except MyException:
+        logging.exception({"key 1": "value 1", "key 2": 2})
+    actual = dict_fmt(caplog, exception_field_name="info_about_exception")
+    actual["info_about_exception"].pop("stack")
+    assert actual == {
+        "key 1": "value 1",
+        "key 2": 2,
+        "info_about_exception": {
+            "message": "this is the exception message",
+            "type": "MyException",
+        },
+    }
+
+
+@pytest.mark.parametrize("value", [None, ""])
+def test_dict_message_at_exception_level_without_exception_field(caplog, value):
+    caplog.set_level("INFO")
+    try:
+        raise MyException("this is the exception message")
+    except MyException:
+        logging.exception({"key 1": "value 1", "key 2": 2})
+    actual = dict_fmt(caplog, exception_field_name=value)
+    assert actual == {
+        "key 1": "value 1",
+        "key 2": 2,
     }
 
 
