@@ -3,6 +3,7 @@ import json
 import time
 import datetime
 import pytest
+import sys
 
 import logging_json
 
@@ -212,6 +213,7 @@ def test_documented_record_attributes(caplog, monkeypatch):
     actual.pop("process_id")
     actual.pop("relative_timestamp")
     actual.pop("line_number")
+    python310 = sys.version_info.minor >= 10
     assert actual == {
         "extra": "this is a value",
         "file_name": "test_formatter.py",
@@ -224,7 +226,7 @@ def test_documented_record_attributes(caplog, monkeypatch):
         "record_message": "{}",
         "thread_name": "MainThread",
         "timestamp": 1599736353.0076675,
-        "timestamp_milliseconds": 7.66754150390625,
+        "timestamp_milliseconds": 7.0 if python310 else 7.66754150390625,
     }
 
 
