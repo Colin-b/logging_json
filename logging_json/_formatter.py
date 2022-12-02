@@ -2,7 +2,7 @@ import collections
 import datetime
 import json
 import logging
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 standard_attributes = (
     "name",
@@ -61,6 +61,7 @@ class JSONFormatter(logging.Formatter):
         *args,
         fields: Dict[str, Any] = None,
         message_field_name: str = "msg",
+        exception_field_name: Optional[str] = "exception",
         **kwargs,
     ):
         # Allow to provide any formatter setting (useful to provide a custom date format)
@@ -68,6 +69,7 @@ class JSONFormatter(logging.Formatter):
         self.fields = fields or {}
         self.usesTime = lambda: "asctime" in self.fields.values()
         self.message_field_name = message_field_name
+        self.exception_field_name = exception_field_name
 
     def format(self, record: logging.LogRecord):
         # Let python set every additional record field
@@ -84,8 +86,8 @@ class JSONFormatter(logging.Formatter):
 
         message.update(_extra_attributes(record))
 
-        if record.exc_info:
-            message["exception"] = {
+        if self.exception_field_name and record.exc_info:
+            message[self.exception_field_name] = {
                 "type": record.exc_info[0].__name__,
                 "message": str(record.exc_info[1]),
                 "stack": self.formatException(record.exc_info),

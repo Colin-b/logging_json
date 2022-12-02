@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2022-12-02
+### Added
+- Added `exception_field_name` parameter.
+
 ## [0.2.1] - 2022-01-26
 ### Fixed
 - `datetime`, `time` and `date` instances are now represented following [ISO-8601](https://www.iso.org/iso-8601-date-and-time-format.html) format instead of raising a `TypeError`.
@@ -23,7 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Public release.
 
-[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/Colin-b/logging_json/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/Colin-b/logging_json/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Colin-b/logging_json/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/Colin-b/logging_json/compare/v0.0.1...v0.1.0
