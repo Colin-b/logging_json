@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2023-01-09
+### Changed
+- Default message key is now `message` instead of `msg` to stay in line with python default. If you still want previous behavior, set `message_field_name` to `msg` at formatter creation.
+
+### Removed
+- Drop support for python 3.6.
+
 ## [0.3.0] - 2022-12-02
 ### Added
 - Added `exception_field_name` parameter.
@@ -27,7 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Public release.
 
-[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/Colin-b/logging_json/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/Colin-b/logging_json/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/Colin-b/logging_json/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Colin-b/logging_json/compare/v0.1.0...v0.2.0

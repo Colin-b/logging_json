@@ -39,27 +39,27 @@ def test_str_with_args_message(caplog):
 def test_str_with_message_field_name(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")
-    assert fmt(caplog, message_field_name="message") == "message 1"
+    assert fmt(caplog, message_field_name="msg") == "message 1"
 
 
 def test_str_with_extra_message(caplog):
     caplog.set_level("INFO")
     logging.info("message 1", extra={"key1": "value 1"})
-    assert dict_fmt(caplog) == {"msg": "message 1", "key1": "value 1"}
+    assert dict_fmt(caplog) == {"message": "message 1", "key1": "value 1"}
 
 
 def test_str_with_message_field_name_and_fields(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")
     assert dict_fmt(
-        caplog, message_field_name="message", fields={"level": "levelname"}
-    ) == {"message": "message 1", "level": "INFO"}
+        caplog, message_field_name="msg", fields={"level": "levelname"}
+    ) == {"msg": "message 1", "level": "INFO"}
 
 
 def test_str_with_args_and_extra_message(caplog):
     caplog.set_level("INFO")
     logging.info("message %s", "1", extra={"key1": "value 1"})
-    assert dict_fmt(caplog) == {"msg": "message 1", "key1": "value 1"}
+    assert dict_fmt(caplog) == {"message": "message 1", "key1": "value 1"}
 
 
 def test_dict_message_with_asctime(caplog, monkeypatch):
@@ -77,7 +77,7 @@ def test_str_message_with_asctime(caplog, monkeypatch):
     logging.info("message 1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
     assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
-    assert actual == {"msg": "message 1"}
+    assert actual == {"message": "message 1"}
 
 
 def test_str_with_args_message_with_asctime(caplog, monkeypatch):
@@ -86,7 +86,7 @@ def test_str_with_args_message_with_asctime(caplog, monkeypatch):
     logging.info("message %s", "1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
     assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
-    assert actual == {"msg": "message 1"}
+    assert actual == {"message": "message 1"}
 
 
 def test_str_with_args_and_extra_message_with_asctime(caplog, monkeypatch):
@@ -95,7 +95,7 @@ def test_str_with_args_and_extra_message_with_asctime(caplog, monkeypatch):
     logging.info("message %s", "1", extra={"key1": "value 1"})
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
     assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
-    assert actual == {"msg": "message 1", "key1": "value 1"}
+    assert actual == {"message": "message 1", "key1": "value 1"}
 
 
 def test_dict_message_at_exception_level(caplog):
@@ -157,7 +157,7 @@ def test_str_message_at_exception_level(caplog):
     actual = dict_fmt(caplog)
     actual["exception"].pop("stack")
     assert actual == {
-        "msg": "message 1",
+        "message": "message 1",
         "exception": {
             "message": "this is the exception message",
             "type": "MyException",
@@ -174,7 +174,7 @@ def test_str_with_args_message_at_exception_level(caplog):
     actual = dict_fmt(caplog)
     actual["exception"].pop("stack")
     assert actual == {
-        "msg": "message 1",
+        "message": "message 1",
         "exception": {
             "message": "this is the exception message",
             "type": "MyException",
@@ -237,7 +237,7 @@ def test_with_extra_in_fields_and_message(caplog):
         "extra": "value 1",
         "key1": "value 1",
         "key2": "value 2",
-        "msg": "message 1",
+        "message": "message 1",
     }
 
 
