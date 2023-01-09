@@ -60,7 +60,7 @@ class JSONFormatter(logging.Formatter):
         self,
         *args,
         fields: Dict[str, Any] = None,
-        message_field_name: str = "msg",
+        message_field_name: str = "message",
         exception_field_name: Optional[str] = "exception",
         **kwargs,
     ):
