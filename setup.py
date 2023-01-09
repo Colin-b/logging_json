@@ -25,7 +25,6 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -42,7 +41,7 @@ setup(
             "pytest-cov==4.*",
         ]
     },
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     project_urls={
         "GitHub": "https://github.com/Colin-b/logging_json",
         "Changelog": "https://github.com/Colin-b/logging_json/blob/master/CHANGELOG.md",

@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Default message key is now `message` instead of `msg` to stay in line with python default. If you still want previous behavior, set `message_field_name` to `msg` at formatter creation.
 
+### Removed
+- Drop support for python 3.6.
+
 ## [0.3.0] - 2022-12-02
 ### Added
 - Added `exception_field_name` parameter.
