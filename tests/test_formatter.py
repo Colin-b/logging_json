@@ -204,6 +204,7 @@ def test_documented_record_attributes(caplog, monkeypatch):
             "thread_name": "threadName",
             "process_id": "process",
             "process_name": "processName",
+            "task_name": "taskName",
             "record_message": "message",
             "extra": "this is a value",
         },
@@ -225,6 +226,7 @@ def test_documented_record_attributes(caplog, monkeypatch):
         "process_name": "MainProcess",
         "record_message": "{}",
         "thread_name": "MainThread",
+        "task_name": None,
         "timestamp": 1599736353.0076675,
         "timestamp_milliseconds": 7.0 if python310 else 7.66754150390625,
     }
