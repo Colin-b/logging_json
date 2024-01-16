@@ -27,6 +27,7 @@ standard_attributes = (
     "process",
     "message",
     "asctime",
+    "taskName",
 )
 
 
