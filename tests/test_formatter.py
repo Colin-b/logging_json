@@ -214,7 +214,7 @@ def test_documented_record_attributes(caplog, monkeypatch):
     actual.pop("process_id")
     actual.pop("relative_timestamp")
     actual.pop("line_number")
-    python310 = sys.version_info.minor >= 10
+    python_minor = sys.version_info.minor
     assert actual == {
         "extra": "this is a value",
         "file_name": "test_formatter.py",
@@ -226,9 +226,9 @@ def test_documented_record_attributes(caplog, monkeypatch):
         "process_name": "MainProcess",
         "record_message": "{}",
         "thread_name": "MainThread",
-        "task_name": None,
+        "task_name": None if python_minor >= 12 else "taskName",
         "timestamp": 1599736353.0076675,
-        "timestamp_milliseconds": 7.0 if python310 else 7.66754150390625,
+        "timestamp_milliseconds": 7.0 if python_minor >= 10 else 7.66754150390625,
     }
 
 

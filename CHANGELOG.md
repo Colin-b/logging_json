@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Explicit support for python `3.12`. Meaning `taskName` is now considered a reserved keyword where value is supposed to be contained in the record itself.
+- Explicit support for python `3.12`. Meaning `taskName` is now considered a reserved keyword where value is supposed to be contained in the record itself (otherwise value will be `taskName` for python < 3.12 when specified).
 
 ## [0.4.0] - 2023-01-09
 ### Changed
