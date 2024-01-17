@@ -4,6 +4,7 @@ import time
 import datetime
 import pytest
 import sys
+import time_machine
 
 import logging_json
 
@@ -62,8 +63,8 @@ def test_str_with_args_and_extra_message(caplog):
     assert dict_fmt(caplog) == {"message": "message 1", "key1": "value 1"}
 
 
-def test_dict_message_with_asctime(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_dict_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info({"key 1": "value 1", "key 2": 2})
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
@@ -71,8 +72,8 @@ def test_dict_message_with_asctime(caplog, monkeypatch):
     assert actual == {"key 1": "value 1", "key 2": 2}
 
 
-def test_str_message_with_asctime(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_str_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
@@ -80,8 +81,8 @@ def test_str_message_with_asctime(caplog, monkeypatch):
     assert actual == {"message": "message 1"}
 
 
-def test_str_with_args_message_with_asctime(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_str_with_args_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message %s", "1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
@@ -89,8 +90,8 @@ def test_str_with_args_message_with_asctime(caplog, monkeypatch):
     assert actual == {"message": "message 1"}
 
 
-def test_str_with_args_and_extra_message_with_asctime(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_str_with_args_and_extra_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message %s", "1", extra={"key1": "value 1"})
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
@@ -182,8 +183,8 @@ def test_str_with_args_message_at_exception_level(caplog):
     }
 
 
-def test_documented_record_attributes(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.0076675", tick=False)
+def test_documented_record_attributes(caplog):
     caplog.set_level("INFO")
     logging.info({})
     actual = dict_fmt(
@@ -227,7 +228,7 @@ def test_documented_record_attributes(caplog, monkeypatch):
         "record_message": "{}",
         "thread_name": "MainThread",
         "task_name": None if python_minor >= 12 else "taskName",
-        "timestamp": 1599736353.0076675,
+        "timestamp": 1599736353.0076668,
         "timestamp_milliseconds": 7.0 if python_minor >= 10 else 7.66754150390625,
     }
 
