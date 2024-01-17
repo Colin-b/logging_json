@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Explicit support for python `3.12`. Meaning `taskName` is now considered a reserved keyword where value is supposed to be contained in the record itself (otherwise value will be `taskName` for python < 3.12 when specified).
+- New parameters `default_time_format` (default to `%Y-%m-%d %H:%M:%S`) and `default_msec_format` (default to `%s,%03d`) allowing to change the formatting of `asctime`.
+  - More details can be found in the documentation on what the impact is when changing those values.
 
 ## [0.4.0] - 2023-01-09
 ### Changed
