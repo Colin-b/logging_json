@@ -27,6 +27,7 @@ standard_attributes = (
     "process",
     "message",
     "asctime",
+    "taskName",
 )
 
 
@@ -62,14 +63,19 @@ class JSONFormatter(logging.Formatter):
         fields: Dict[str, Any] = None,
         message_field_name: str = "message",
         exception_field_name: Optional[str] = "exception",
+        default_time_format: str = "%Y-%m-%d %H:%M:%S",
+        default_msec_format: str = "%s,%03d",
         **kwargs,
     ):
         # Allow to provide any formatter setting (useful to provide a custom date format)
         super().__init__(*args, **kwargs)
         self.fields = fields or {}
-        self.usesTime = lambda: "asctime" in self.fields.values()
         self.message_field_name = message_field_name
         self.exception_field_name = exception_field_name
+        # (Allows to) overrides logging.Formatter default behavior
+        self.usesTime = lambda: "asctime" in self.fields.values()
+        self.default_time_format = default_time_format
+        self.default_msec_format = default_msec_format
 
     def format(self, record: logging.LogRecord):
         # Let python set every additional record field
@@ -96,7 +102,7 @@ class JSONFormatter(logging.Formatter):
         if len(message) == 1 and self.message_field_name in message:
             return super().formatMessage(record)
 
-        return json.dumps(message, default=default_converter)
+        return json.dumps(message, ensure_ascii=False, default=default_converter)
 
     def formatMessage(self, record: logging.LogRecord) -> str:
         # Speed up this step by doing nothing

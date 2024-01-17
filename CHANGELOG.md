@@ -1,17 +1,26 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.5.0] - 2024-01-17
+### Added
+- Explicit support for python `3.12`. Meaning `taskName` is now considered a reserved keyword where value is supposed to be contained in the record itself (otherwise value will be `taskName` for python < 3.12 when specified).
+- New parameters `default_time_format` (default to `%Y-%m-%d %H:%M:%S`) and `default_msec_format` (default to `%s,%03d`) allowing to change the formatting of `asctime`.
+  - More details can be found in the documentation on what the impact is when changing those values.
+
+### Fixed
+- non-ASCII but valid UTF-8 values and field names will now be output as provided (they will not be escaped anymore).
 
 ## [0.4.0] - 2023-01-09
 ### Changed
 - Default message key is now `message` instead of `msg` to stay in line with python default. If you still want previous behavior, set `message_field_name` to `msg` at formatter creation.
 
 ### Removed
-- Drop support for python 3.6.
+- Drop support for python `3.6`.
 
 ## [0.3.0] - 2022-12-02
 ### Added
@@ -34,7 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Public release.
 
-[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/Colin-b/logging_json/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/Colin-b/logging_json/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/Colin-b/logging_json/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/Colin-b/logging_json/compare/v0.2.0...v0.2.1

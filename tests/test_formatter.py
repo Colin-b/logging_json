@@ -1,9 +1,9 @@
 import logging
 import json
-import time
 import datetime
 import pytest
 import sys
+import time_machine
 
 import logging_json
 
@@ -62,39 +62,39 @@ def test_str_with_args_and_extra_message(caplog):
     assert dict_fmt(caplog) == {"message": "message 1", "key1": "value 1"}
 
 
-def test_dict_message_with_asctime(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.007667")
+def test_dict_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info({"key 1": "value 1", "key 2": 2})
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
-    assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
+    assert actual.pop("date_time") == "2020-09-10 13:12:33,007"
     assert actual == {"key 1": "value 1", "key 2": 2}
 
 
-def test_str_message_with_asctime(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.007667")
+def test_str_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
-    assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
+    assert actual.pop("date_time") == "2020-09-10 13:12:33,007"
     assert actual == {"message": "message 1"}
 
 
-def test_str_with_args_message_with_asctime(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.007667")
+def test_str_with_args_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message %s", "1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
-    assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
+    assert actual.pop("date_time") == "2020-09-10 13:12:33,007"
     assert actual == {"message": "message 1"}
 
 
-def test_str_with_args_and_extra_message_with_asctime(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.007667")
+def test_str_with_args_and_extra_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message %s", "1", extra={"key1": "value 1"})
     actual = dict_fmt(caplog, fields={"date_time": "asctime"})
-    assert time.strptime(actual.pop("date_time"), "%Y-%m-%d %H:%M:%S,007")
+    assert actual.pop("date_time") == "2020-09-10 13:12:33,007"
     assert actual == {"message": "message 1", "key1": "value 1"}
 
 
@@ -182,8 +182,8 @@ def test_str_with_args_message_at_exception_level(caplog):
     }
 
 
-def test_documented_record_attributes(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10T13:12:33.007667+00:00", tick=False)
+def test_documented_record_attributes(caplog):
     caplog.set_level("INFO")
     logging.info({})
     actual = dict_fmt(
@@ -204,6 +204,7 @@ def test_documented_record_attributes(caplog, monkeypatch):
             "thread_name": "threadName",
             "process_id": "process",
             "process_name": "processName",
+            "task_name": "taskName",
             "record_message": "message",
             "extra": "this is a value",
         },
@@ -213,7 +214,7 @@ def test_documented_record_attributes(caplog, monkeypatch):
     actual.pop("process_id")
     actual.pop("relative_timestamp")
     actual.pop("line_number")
-    python310 = sys.version_info.minor >= 10
+    python_minor = sys.version_info.minor
     assert actual == {
         "extra": "this is a value",
         "file_name": "test_formatter.py",
@@ -225,8 +226,9 @@ def test_documented_record_attributes(caplog, monkeypatch):
         "process_name": "MainProcess",
         "record_message": "{}",
         "thread_name": "MainThread",
-        "timestamp": 1599736353.0076675,
-        "timestamp_milliseconds": 7.0 if python310 else 7.66754150390625,
+        "task_name": None if python_minor >= 12 else "taskName",
+        "timestamp": 1599743553.0076668,
+        "timestamp_milliseconds": 7.0 if python_minor >= 10 else 7.666826248168945,
     }
 
 
@@ -239,6 +241,38 @@ def test_with_extra_in_fields_and_message(caplog):
         "key2": "value 2",
         "message": "message 1",
     }
+
+
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_asctime_with_datefmt(caplog):
+    caplog.set_level("INFO")
+    logging.info("message 1")
+    actual = dict_fmt(caplog, fields={"date_time": "asctime"}, datefmt="%Y-%m-%dT%H:%M:%S")
+    assert actual.pop("date_time") == "2020-09-10T13:12:33"
+    assert actual == {"message": "message 1"}
+
+
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_asctime_with_default_time_format_and_default_msec_format(caplog):
+    caplog.set_level("INFO")
+    logging.info("message 1")
+    actual = dict_fmt(caplog, fields={"date_time": "asctime"}, default_time_format="%Y-%m-%dT%H:%M:%S", default_msec_format="%s.%03d")
+    assert actual.pop("date_time") == "2020-09-10T13:12:33.007"
+    assert actual == {"message": "message 1"}
+
+
+def test_encoding_with_str(caplog):
+    caplog.set_level("INFO")
+    logging.info("테스트")
+    actual = fmt(caplog)
+    assert actual == "테스트"
+
+
+def test_encoding_with_dict(caplog):
+    caplog.set_level("INFO")
+    logging.info("테스트", extra={"테스트": "테스트"})
+    actual = fmt(caplog)
+    assert actual == '{"message": "테스트", "테스트": "테스트"}'
 
 
 def test_json_dumps_error(caplog):

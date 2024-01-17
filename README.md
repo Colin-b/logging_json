@@ -5,7 +5,7 @@
 <a href="https://github.com/Colin-b/logging_json/actions"><img alt="Build status" src="https://github.com/Colin-b/logging_json/workflows/Release/badge.svg"></a>
 <a href="https://github.com/Colin-b/logging_json/actions"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Number of tests" src="https://img.shields.io/badge/tests-21 passed-blue"></a>
+<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Number of tests" src="https://img.shields.io/badge/tests-25 passed-blue"></a>
 <a href="https://pypi.org/project/logging_json/"><img alt="Number of downloads" src="https://img.shields.io/pypi/dm/logging_json"></a>
 </p>
 
@@ -69,6 +69,24 @@ import logging
 
 logging.info("This is my message")
 ```
+
+### Changing asctime representation
+
+You can override the default representation of asctime (`2003-07-08 16:49:45,896`) based on two different scenarii:
+
+#### Without milliseconds
+
+Set `datefmt` parameter.
+
+Setting `datefmt` to `%Y-%m-%dT%H:%M:%S` would result in `2003-07-08T16:49:45`.
+
+#### With milliseconds
+
+Set `default_time_format` to something else than `%Y-%m-%d %H:%M:%S` to change the representation part without milliseconds.
+Set `default_msec_format` to something else than `%s,%03d` to change the representation milliseconds.
+Note that `%s` in `default_msec_format` is going to be replaced by the representation without milliseconds.
+
+Setting `default_time_format` to `%Y-%m-%dT%H:%M:%S` and `default_msec_format` to `%s.%03d` would result in `2003-07-08T16:49:45.896`.
 
 ## Configuration
 
