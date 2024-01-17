@@ -244,15 +244,6 @@ def test_with_extra_in_fields_and_message(caplog):
 
 
 @time_machine.travel("2020-09-10 13:12:33.0076675")
-def test_asctime_without_default_msec_format(caplog):
-    caplog.set_level("INFO")
-    logging.info("message 1")
-    actual = dict_fmt(caplog, fields={"date_time": "asctime"}, default_msec_format=None)
-    assert actual.pop("date_time") == "2020-09-10 13:12:33"
-    assert actual == {"message": "message 1"}
-
-
-@time_machine.travel("2020-09-10 13:12:33.0076675")
 def test_asctime_with_datefmt(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")

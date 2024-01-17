@@ -5,7 +5,7 @@
 <a href="https://github.com/Colin-b/logging_json/actions"><img alt="Build status" src="https://github.com/Colin-b/logging_json/workflows/Release/badge.svg"></a>
 <a href="https://github.com/Colin-b/logging_json/actions"><img alt="Coverage" src="https://img.shields.io/badge/coverage-100%25-brightgreen"></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Number of tests" src="https://img.shields.io/badge/tests-24 passed-blue"></a>
+<a href="https://github.com/Colin-b/logging_json/actions"><img alt="Number of tests" src="https://img.shields.io/badge/tests-23 passed-blue"></a>
 <a href="https://pypi.org/project/logging_json/"><img alt="Number of downloads" src="https://img.shields.io/pypi/dm/logging_json"></a>
 </p>
 
@@ -76,15 +76,9 @@ You can override the default representation of asctime (`2003-07-08 16:49:45,896
 
 #### Without milliseconds
 
-Two options are at your disposal depending on your need:
+Set `datefmt` parameter.
 
-1) Option 1: The default representation for everything besides milliseconds suits you.
-   Set `default_msec_format` parameter to None.
-   It would result in a representation like `2003-07-08 16:49:45`.
-
-2) Option 2: You want to change the default representation (without milliseonds).
-   Set `datefmt` parameter to something else than `%Y-%m-%d %H:%M:%S`.
-   It would result in a representation like `2003-07-08T16:49:45` for `%Y-%m-%dT%H:%M:%S`.
+Setting `datefmt` to `%Y-%m-%dT%H:%M:%S` would result in `2003-07-08T16:49:45`.
 
 #### With milliseconds
 
