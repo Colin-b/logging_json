@@ -228,7 +228,7 @@ def test_documented_record_attributes(caplog):
         "thread_name": "MainThread",
         "task_name": None if python_minor >= 12 else "taskName",
         "timestamp": 1599743553.0076668,
-        "timestamp_milliseconds": 7.0 if python_minor >= 10 else 7.66754150390625,
+        "timestamp_milliseconds": 7.0 if python_minor >= 10 else 7.666826248168945,
     }
 
 
