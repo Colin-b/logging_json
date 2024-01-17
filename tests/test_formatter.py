@@ -1,6 +1,5 @@
 import logging
 import json
-import time
 import datetime
 import pytest
 import sys
@@ -244,8 +243,8 @@ def test_with_extra_in_fields_and_message(caplog):
     }
 
 
-def test_asctime_without_default_msec_format(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_asctime_without_default_msec_format(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"}, default_msec_format=None)
@@ -253,8 +252,8 @@ def test_asctime_without_default_msec_format(caplog, monkeypatch):
     assert actual == {"message": "message 1"}
 
 
-def test_asctime_with_datefmt(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_asctime_with_datefmt(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"}, datefmt="%Y-%m-%dT%H:%M:%S")
@@ -262,8 +261,8 @@ def test_asctime_with_datefmt(caplog, monkeypatch):
     assert actual == {"message": "message 1"}
 
 
-def test_asctime_with_default_time_format_and_default_msec_format(caplog, monkeypatch):
-    monkeypatch.setattr(time, "time", lambda: 1599736353.0076675)
+@time_machine.travel("2020-09-10 13:12:33.0076675")
+def test_asctime_with_default_time_format_and_default_msec_format(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")
     actual = dict_fmt(caplog, fields={"date_time": "asctime"}, default_time_format="%Y-%m-%dT%H:%M:%S", default_msec_format="%s.%03d")
