@@ -261,6 +261,20 @@ def test_asctime_with_default_time_format_and_default_msec_format(caplog):
     assert actual == {"message": "message 1"}
 
 
+def test_encoding_with_str(caplog):
+    caplog.set_level("INFO")
+    logging.info("테스트")
+    actual = fmt(caplog)
+    assert actual == "테스트"
+
+
+def test_encoding_with_dict(caplog):
+    caplog.set_level("INFO")
+    logging.info("테스트", extra={"테스트": "테스트"})
+    actual = fmt(caplog)
+    assert actual == '{"message": "테스트", "테스트": "테스트"}'
+
+
 def test_json_dumps_error(caplog):
     class CustomWithoutStr:
         pass

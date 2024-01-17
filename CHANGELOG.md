@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New parameters `default_time_format` (default to `%Y-%m-%d %H:%M:%S`) and `default_msec_format` (default to `%s,%03d`) allowing to change the formatting of `asctime`.
   - More details can be found in the documentation on what the impact is when changing those values.
 
+### Fixed
+- non-ASCII but valid UTF-8 values and field names will now be output as provided (they will not be escaped anymore).
+
 ## [0.4.0] - 2023-01-09
 ### Changed
 - Default message key is now `message` instead of `msg` to stay in line with python default. If you still want previous behavior, set `message_field_name` to `msg` at formatter creation.

@@ -102,7 +102,7 @@ class JSONFormatter(logging.Formatter):
         if len(message) == 1 and self.message_field_name in message:
             return super().formatMessage(record)
 
-        return json.dumps(message, default=default_converter)
+        return json.dumps(message, ensure_ascii=False, default=default_converter)
 
     def formatMessage(self, record: logging.LogRecord) -> str:
         # Speed up this step by doing nothing
