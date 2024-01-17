@@ -62,7 +62,7 @@ def test_str_with_args_and_extra_message(caplog):
     assert dict_fmt(caplog) == {"message": "message 1", "key1": "value 1"}
 
 
-@time_machine.travel("2020-09-10 13:12:33.0076675")
+@time_machine.travel("2020-09-10 13:12:33.007667")
 def test_dict_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info({"key 1": "value 1", "key 2": 2})
@@ -71,7 +71,7 @@ def test_dict_message_with_asctime(caplog):
     assert actual == {"key 1": "value 1", "key 2": 2}
 
 
-@time_machine.travel("2020-09-10 13:12:33.0076675")
+@time_machine.travel("2020-09-10 13:12:33.007667")
 def test_str_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message 1")
@@ -80,7 +80,7 @@ def test_str_message_with_asctime(caplog):
     assert actual == {"message": "message 1"}
 
 
-@time_machine.travel("2020-09-10 13:12:33.0076675")
+@time_machine.travel("2020-09-10 13:12:33.007667")
 def test_str_with_args_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message %s", "1")
@@ -89,7 +89,7 @@ def test_str_with_args_message_with_asctime(caplog):
     assert actual == {"message": "message 1"}
 
 
-@time_machine.travel("2020-09-10 13:12:33.0076675")
+@time_machine.travel("2020-09-10 13:12:33.007667")
 def test_str_with_args_and_extra_message_with_asctime(caplog):
     caplog.set_level("INFO")
     logging.info("message %s", "1", extra={"key1": "value 1"})
@@ -182,7 +182,7 @@ def test_str_with_args_message_at_exception_level(caplog):
     }
 
 
-@time_machine.travel("2020-09-10 13:12:33.0076675", tick=False)
+@time_machine.travel("2020-09-10T13:12:33.007667+00:00", tick=False)
 def test_documented_record_attributes(caplog):
     caplog.set_level("INFO")
     logging.info({})
@@ -227,7 +227,7 @@ def test_documented_record_attributes(caplog):
         "record_message": "{}",
         "thread_name": "MainThread",
         "task_name": None if python_minor >= 12 else "taskName",
-        "timestamp": 1599736353.0076668,
+        "timestamp": 1599743553.0076668,
         "timestamp_milliseconds": 7.0 if python_minor >= 10 else 7.66754150390625,
     }
 
