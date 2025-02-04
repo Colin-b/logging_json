@@ -306,6 +306,25 @@ def test_json_dumps_error(caplog):
     }
 
 
+def test_exception_logging_without_exception_info(caplog):
+    caplog.set_level("INFO")
+    logging.exception("There is no exception context")
+
+    assert fmt(caplog) == "There is no exception context"
+
+
+def test_exception_logging_in_finally(caplog):
+    caplog.set_level("INFO")
+    try:
+        raise MyException("this is the exception message")
+    except MyException:
+        pass
+    finally:
+        logging.exception("Something happened")
+
+    assert fmt(caplog) == "Something happened"
+
+
 def fmt(caplog, *formatter_args, **formatter_kwargs) -> str:
     return logging_json.JSONFormatter(*formatter_args, **formatter_kwargs).format(
         caplog.records[0]

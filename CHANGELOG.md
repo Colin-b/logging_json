@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-02-04
+### Fixed
+- Using [`logging.exception`](https://docs.python.org/3/library/logging.html#logging.exception) outside an exception context will not prevent log from being formatted anymore.
+
+### Removed
+- Drop support for python `3.7`.
+- Drop support for python `3.8`.
+
+### Added
+- Explicit support for python `3.13`.
+
 ## [0.5.0] - 2024-01-17
 ### Added
 - Explicit support for python `3.12`. Meaning `taskName` is now considered a reserved keyword where value is supposed to be contained in the record itself (otherwise value will be `taskName` for python < 3.12 when specified).
@@ -43,7 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Public release.
 
-[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/Colin-b/logging_json/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/Colin-b/logging_json/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/Colin-b/logging_json/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/Colin-b/logging_json/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/Colin-b/logging_json/compare/v0.2.1...v0.3.0

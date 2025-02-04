@@ -56,6 +56,10 @@ def default_converter(obj: Any) -> str:
     return str(obj)
 
 
+def has_exception_info(record: logging.LogRecord) -> bool:
+    return record.exc_info and record.exc_info[0] is not None
+
+
 class JSONFormatter(logging.Formatter):
     def __init__(
         self,
@@ -92,7 +96,7 @@ class JSONFormatter(logging.Formatter):
 
         message.update(_extra_attributes(record))
 
-        if self.exception_field_name and record.exc_info:
+        if self.exception_field_name and has_exception_info(record):
             message[self.exception_field_name] = {
                 "type": record.exc_info[0].__name__,
                 "message": str(record.exc_info[1]),

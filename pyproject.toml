@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "logging_json"
 description = "JSON formatter for python logging"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 license = {file = "LICENSE"}
 authors = [
     {name = "Colin Bounouar", email = "colin.bounouar.dev@gmail.com" }
@@ -23,12 +23,11 @@ classifiers=[
     "Typing :: Typed",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Build Tools",
 ]
 dependencies = []
@@ -45,7 +44,7 @@ testing = [
     # Used to freeze time
     "time-machine==2.*",
     # Used to check coverage
-    "pytest-cov==4.*",
+    "pytest-cov==6.*",
 ]
 
 [tool.setuptools.packages.find]
